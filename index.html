@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>工作类型分类</title>
+    <script>
+        var questions = [
+            "这份工作是不是让您觉得自己成了满地打滚的海绵宝宝（干无聊琐碎的任务）？",
+            "你是不是成了最会打补丁的超级英雄（解决其他人搞砸的问题）？",
+            "这份工作是不是像一场闷烧的炸弹，对社会或人类没有一点点积极贡献？",
+            "这份工作是不是让你觉得自己就像在餐厅切西瓜、擦桌子，没有任何成长的机会？",
+            "工作让你觉得有一大堆橡皮擦，却擦不去心情的灰暗吗？",
+            "您是否觉得自己像在工作中不断地捡西瓜子，但完全无法找到西瓜？",
+            "这份工作是不是让您觉得每天都在填各种表格，跟大明星考试一样无聊，毫无意义？",
+            "是不是觉得自己成了超级指挥官，管理一大堆小兵，但任务实际上并不需要这样的管理？",
+            "这份工作是不是让你觉得自己陷入了精英阶层的精神角斗场，而对社会贡献不大？"
+        ];
+
+        function classifyJob(scores) {
+            var results = {};
+            if (scores[0] == 1) {
+                results['附庸随从'] = "这类工作的主要特点是执行琐碎任务，通常对上司或其他同事提供某种形式的附加服务。这些工作往往没有真正的意义，而且执行者很少有决策权。可能唯一的意义就是展现当权者的重要。例如，某些办公室的低级职员可能会被要求为上司跑腿、购买咖啡或执行其他无关紧要的任务。";
+            }
+            if (scores[1] == 1) {
+                results['打补丁者'] = "这类工作的特点是解决或掩盖由于其他原因引起的问题，但本质上并没有真正解决根本性的难题。这些工作的存在似乎只是为了让人相信问题得到了解决。例如，一些企业可能会雇佣公关人员来控制不利新闻的传播，而不是着手解决导致负面新闻的问题。";
+            }
+            if (scores[2] == 1 || scores[3] == 1 || scores[4] == 1 || scores[5] == 1) {
+                results['填表打勾者'] = "这类工作的特点是执行表面上看起来有用的任务，但实际上对于工作本身并没有真正意义。例如，某些公司可能会为了合规要求而进行各种报表和文件的填写，但这些工作并没有直接贡献到公司的核心业务。";
+            }
+            if (scores[6] == 1) {
+                results['任务分配者'] = "这类工作的特点是监督和管理其他人的工作，但往往这些被管理的工作并不需要如此强大的管理层级。这类工作的存在可能是因为组织过度扩张或官僚化。这些管理层往往并没有真正的权力或责任，却获得了高额的薪水和福利。";
+            }
+            if (scores[7] == 1 || scores[8] == 1) {
+                results['打手'] = "这类工作的特点是从事对社会或人类没有积极贡献的活动，通常涉及精英阶层之间的权力斗争和竞争。这些工作往往与金融、政治或其他精英群体相关。格雷伯认为这类工作在现代社会中属于狗屎工作的典型代表。";
+            }
+            return results;
+        }
+        
+        function submitAnswers() {
+            var scores = questions.map(function(question, i) {
+                return document.getElementById("question-" + i + "-yes").checked ? 1 : 0;
+            });
+            var results = classifyJob(scores);
+            var resultText = "";
+            for (var jobType in results) {
+                resultText += jobType + ": " + results[jobType] + "\n";
+            }
+            alert(resultText);
+        }
+        
+        window.onload = function() {
+            var form = document.getElementById("question-form");
+            questions.forEach(function(question, i) {
+                var p = document.createElement("p");
+                p.innerText = question;
+                form.appendChild(p);
+                
+                var yes = document.createElement("input");
+                yes.type = "radio";
+                yes.name = "question-" + i;
+                yes.id = "question-" + i + "-yes";
+                form.appendChild(yes);
+                form.appendChild(document.createTextNode("Yes"));
+                
+                var
